@@ -15,7 +15,8 @@ const gainBalanceFactors = {
     square: 1,
     sawtooth: 1.5,
     triangle: 2.5,
-    sine: 2
+    sine: 2,
+    custom: 1
 };
 const volumeSlider = document.getElementById('volumeSlider');
 const timbreSelect = document.getElementById('timbreSelect');

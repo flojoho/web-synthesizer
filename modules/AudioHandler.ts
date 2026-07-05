@@ -1,10 +1,11 @@
 import settings from './settings.js';
 
-const gainBalanceFactors = {
+const gainBalanceFactors: Record<OscillatorType, number> = {
   square: 1,
   sawtooth: 1.5,
   triangle: 2.5,
-  sine: 2
+  sine: 2,
+  custom: 1
 }
 
 const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
@@ -21,8 +22,8 @@ if(!isNaN(initialVolume)) {
 
 const maxGain = 0.2;
 const volume = initialVolume;
-let context;
-let volumeNode;
+let context: AudioContext;
+let volumeNode: GainNode;
 
 const ensureContext = () => {
   if(!context) {
@@ -60,11 +61,11 @@ const frequencyFromNoteNumber = (noteNumber: number) => {
 
 export class Note {
   #noteNumber;
-  #oscillator;
+  #oscillator!: OscillatorNode;
   fadeInDuration = 0.005;
   fadeOutDuration = 0.08;
-  gainNode;
-  oscillatorType = timbreSelect.value;
+  gainNode!: GainNode;
+  oscillatorType: OscillatorType = timbreSelect.value as OscillatorType;
   
   constructor(noteNumber: number) {
     this.#noteNumber = noteNumber;
