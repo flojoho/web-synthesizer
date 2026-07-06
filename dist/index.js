@@ -86,3 +86,4 @@ document.addEventListener('keyup', e => {
 volumeSlider.addEventListener('input', () => {
     AudioHandler.setVolume(Number.parseFloat(volumeSlider.value));
 });
+//# sourceMappingURL=index.js.map

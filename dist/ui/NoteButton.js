@@ -70,3 +70,4 @@ class NoteButton {
     }
 }
 export default NoteButton;
+//# sourceMappingURL=NoteButton.js.map

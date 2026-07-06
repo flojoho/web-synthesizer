@@ -41,3 +41,4 @@ buttonGridContainer.addEventListener('touchmove', e => {
     ctx.stroke();
     prevX = x;
 });
+//# sourceMappingURL=HeatMap.js.map

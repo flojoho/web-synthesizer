@@ -41,3 +41,4 @@ export const noteNumberFromKey = (keyCode) => {
         return null;
     return noteNumber + settings.get('transposeOffset');
 };
+//# sourceMappingURL=KeyMapping.js.map

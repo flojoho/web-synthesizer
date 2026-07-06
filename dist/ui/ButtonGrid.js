@@ -37,3 +37,4 @@ const disableHighlight = (noteNumber) => {
     noteButtonGroups[noteNumber].forEach(noteButton => noteButton.disableHighlight());
 };
 export default { render, enableHighlight, disableHighlight };
+//# sourceMappingURL=ButtonGrid.js.map

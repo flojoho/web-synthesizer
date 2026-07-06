@@ -26,3 +26,4 @@ spacingSizeSlider.addEventListener('input', () => {
     ButtonGrid.render();
     settings.set('spacingSize', spacingSize);
 });
+//# sourceMappingURL=SettingsModal.js.map

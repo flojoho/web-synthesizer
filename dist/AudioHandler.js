@@ -103,3 +103,4 @@ _Note_noteNumber = new WeakMap(), _Note_oscillator = new WeakMap(), _Note_instan
     __classPrivateFieldGet(this, _Note_oscillator, "f").stop(now + this.fadeOutDuration);
 };
 export default { stopAllNotes, setVolume, changeTimbre, Note };
+//# sourceMappingURL=AudioHandler.js.map

@@ -1,3 +1,6 @@
 {
-  "liveServer.settings.port": 5501
+  "search.exclude": {
+    "dist/**/*.js": true,
+    "dist/**/*.js.map": true
+  }
 }

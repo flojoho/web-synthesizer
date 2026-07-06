@@ -45,3 +45,4 @@ const set = (key, value) => {
     localStorage.setItem('settings', JSON.stringify(settings));
 };
 export default { get, set };
+//# sourceMappingURL=settings.js.map
