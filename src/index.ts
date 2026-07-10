@@ -2,11 +2,12 @@ import { noteNumberFromKey, transposeUp, transposeDown } from './KeyMapping.js';
 import AudioHandler, { Note } from './AudioHandler.js';
 import './ui/SettingsModal.js';
 import ButtonGrid from './ui/ButtonGrid.js';
-import './ui/HeatMap.js';
+import HeatMap from './ui/HeatMap.js';
 
 ButtonGrid.render();
 addEventListener('resize', () => {
   ButtonGrid.render();
+  HeatMap.clear();
 });
 
 const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;

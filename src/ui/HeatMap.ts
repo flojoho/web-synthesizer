@@ -1,4 +1,4 @@
-import { getCssVariable } from '../helpers.js';
+import { cssVariable } from '../helpers.js';
 
 const canvas = document.getElementById('heat-map') as HTMLCanvasElement;
 const buttonGridContainer = document.getElementById('button-grid-container') as HTMLDivElement;
@@ -11,23 +11,35 @@ canvas.height = canvas.offsetHeight;
 const radius = 10;
 
 const { width, height } = canvas;
+class HeatMap {
+  clear() {
+    ctx.clearRect(0, 0, width, height);
+  }
 
-ctx.fillStyle = getCssVariable('black');
-ctx.fillRect(0, 0, width, height);
+  darkenAndBlur () {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.01)';
+    ctx.fillRect(0, 0, width, height);
 
-setInterval(() => {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.0075)';
-  ctx.fillRect(0, 0, width, height);
+    ctx.filter = 'blur(0.4px)';
 
-  ctx.filter = 'blur(0.4px)';
+    ctx.drawImage(canvas, 0, 0);
 
-  ctx.drawImage(canvas, 0, 0);
+    ctx.filter = 'none';
+  }
 
-  ctx.filter = 'none';
-}, 100);
+  drawCircle (x: number, y: number) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+  }
+}
 
-let prevX = 0;
-let prevY = 0;
+const heatMap = new HeatMap();
+
+heatMap.clear();
+
+setInterval(heatMap.darkenAndBlur, 100);
 
 buttonGridContainer.addEventListener('touchstart', e => {
   e.preventDefault();
@@ -35,19 +47,7 @@ buttonGridContainer.addEventListener('touchstart', e => {
   const x = e.targetTouches[0].clientX;
   const y = e.targetTouches[0].clientY;
 
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
-  ctx.fillStyle = 'white';
-  ctx.fill();
-
-  prevX = x;
-  prevY = y;
+  heatMap.drawCircle(x, y);
 });
 
-class HeatMap {
-  clear() {
-    
-  }
-}
-
-export default new HeatMap();
+export default heatMap;
