@@ -6,7 +6,7 @@ const gainBalanceFactors: Record<OscillatorType, number> = {
   triangle: 2.5,
   sine: 2,
   custom: 1
-}
+};
 
 const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
 const timbreSelect = document.getElementById('timbreSelect') as HTMLSelectElement;

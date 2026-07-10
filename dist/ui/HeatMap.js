@@ -1,4 +1,4 @@
-"use strict";
+import { getCssVariable } from '../helpers.js';
 const canvas = document.getElementById('heat-map');
 const buttonGridContainer = document.getElementById('button-grid-container');
 const ctx = canvas.getContext('2d');
@@ -6,7 +6,7 @@ canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 const radius = 10;
 const { width, height } = canvas;
-ctx.fillStyle = 'black';
+ctx.fillStyle = getCssVariable('black');
 ctx.fillRect(0, 0, width, height);
 setInterval(() => {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.0075)';
@@ -28,17 +28,9 @@ buttonGridContainer.addEventListener('touchstart', e => {
     prevX = x;
     prevY = y;
 });
-buttonGridContainer.addEventListener('touchmove', e => {
-    e.preventDefault();
-    const x = e.targetTouches[0].clientX;
-    const y = e.targetTouches[0].clientY;
-    ctx.strokeStyle = 'white';
-    ctx.lineWidth = 2 * radius;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(prevX, prevY);
-    ctx.lineTo(x, prevY);
-    ctx.stroke();
-    prevX = x;
-});
+class HeatMap {
+    clear() {
+    }
+}
+export default new HeatMap();
 //# sourceMappingURL=HeatMap.js.map

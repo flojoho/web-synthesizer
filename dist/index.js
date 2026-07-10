@@ -4,7 +4,9 @@ import './ui/SettingsModal.js';
 import ButtonGrid from './ui/ButtonGrid.js';
 import './ui/HeatMap.js';
 ButtonGrid.render();
-addEventListener('resize', ButtonGrid.render);
+addEventListener('resize', () => {
+    ButtonGrid.render();
+});
 const volumeSlider = document.getElementById('volumeSlider');
 function incrementStatistics(data) {
     let statistics = JSON.parse(localStorage.getItem('statistics') || '{}');

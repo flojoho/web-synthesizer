@@ -5,7 +5,9 @@ import ButtonGrid from './ui/ButtonGrid.js';
 import './ui/HeatMap.js';
 
 ButtonGrid.render();
-addEventListener('resize', ButtonGrid.render);
+addEventListener('resize', () => {
+  ButtonGrid.render();
+});
 
 const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
 
