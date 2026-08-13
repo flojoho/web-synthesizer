@@ -1,4 +1,4 @@
-import { Note } from '../AudioHandler.js';
+import { Note } from '../audioHandler.js';
 import settings from '../settings.js';
 
 let diameter = settings.get('buttonSize');

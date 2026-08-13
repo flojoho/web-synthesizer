@@ -1,5 +1,5 @@
-import { noteNumberFromKey, transposeUp, transposeDown } from './KeyMapping.js';
-import AudioHandler, { Note } from './AudioHandler.js';
+import { noteNumberFromKey, transposeUp, transposeDown } from './keyMapping.js';
+import AudioHandler, { Note } from './audioHandler.js';
 import './ui/SettingsModal.js';
 import ButtonGrid from './ui/ButtonGrid.js';
 import HeatMap from './ui/HeatMap.js';
