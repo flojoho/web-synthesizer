@@ -35,8 +35,9 @@ function noteKeyGotPressed(keyCode) {
     });
 }
 function noteKeyGotReleased(keyCode) {
+    var _a;
     const noteNumber = noteNumberFromKey(keyCode);
-    notes[keyCode].stop();
+    (_a = notes[keyCode]) === null || _a === void 0 ? void 0 : _a.stop();
     ButtonGrid.disableHighlight(noteNumber);
 }
 //**************************** EVENT HANDLING ************************

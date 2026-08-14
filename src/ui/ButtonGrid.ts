@@ -46,11 +46,11 @@ const render = () => {
 }
 
 const enableHighlight = (noteNumber: number) => {
-  noteButtonGroups[noteNumber].forEach(noteButton => noteButton.enableHighlight());
+  noteButtonGroups[noteNumber]?.forEach(noteButton => noteButton.enableHighlight());
 }
 
 const disableHighlight = (noteNumber: number) => {
-  noteButtonGroups[noteNumber].forEach(noteButton => noteButton.disableHighlight());
+  noteButtonGroups[noteNumber]?.forEach(noteButton => noteButton.disableHighlight());
 }
 
 export default { render, enableHighlight, disableHighlight };

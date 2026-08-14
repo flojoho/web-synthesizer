@@ -31,10 +31,12 @@ const render = () => {
     }
 };
 const enableHighlight = (noteNumber) => {
-    noteButtonGroups[noteNumber].forEach(noteButton => noteButton.enableHighlight());
+    var _a;
+    (_a = noteButtonGroups[noteNumber]) === null || _a === void 0 ? void 0 : _a.forEach(noteButton => noteButton.enableHighlight());
 };
 const disableHighlight = (noteNumber) => {
-    noteButtonGroups[noteNumber].forEach(noteButton => noteButton.disableHighlight());
+    var _a;
+    (_a = noteButtonGroups[noteNumber]) === null || _a === void 0 ? void 0 : _a.forEach(noteButton => noteButton.disableHighlight());
 };
 export default { render, enableHighlight, disableHighlight };
 //# sourceMappingURL=ButtonGrid.js.map

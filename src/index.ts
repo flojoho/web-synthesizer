@@ -55,7 +55,7 @@ function noteKeyGotPressed(keyCode: string) {
 
 function noteKeyGotReleased(keyCode: string) {
   const noteNumber = noteNumberFromKey(keyCode);
-  notes[keyCode].stop();
+  notes[keyCode]?.stop();
 
   ButtonGrid.disableHighlight(noteNumber);
 }

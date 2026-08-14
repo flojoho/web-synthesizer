@@ -9,37 +9,28 @@ if(!isNaN(initialVolume)) {
 
 const maxGain = 0.2;
 const volume = initialVolume;
-let context: AudioContext;
+let context = new AudioContext();
 let volumeNode: GainNode;
 
-const ensureAudioSetup = () => {
-  if(!context) {
-    context = new AudioContext();
-
-    volumeNode = context.createGain();
-    volumeNode.gain.value = volume/100 * maxGain;
-    volumeNode.connect(context.destination);
-  }
-};
+volumeNode = context.createGain();
+volumeNode.gain.value = volume/100 * maxGain;
+volumeNode.connect(context.destination);
 
 const stopAllNotes = () => {
-  ensureAudioSetup();
+  
 };
 
 const setVolume = (percentage: number) => {
-  ensureAudioSetup();
   // TODO: should i use a number between 0 and 1 instead of percentages?
   volumeNode.gain.value = percentage / 100 * maxGain;
   settings.set('volume', percentage);
 };
 
 export const connectAudioNode = (node: AudioNode) => {
-  ensureAudioSetup();
   node.connect(volumeNode);
 };
 
 export const getContext = () => {
-  ensureAudioSetup();
   return context;
 };
 
