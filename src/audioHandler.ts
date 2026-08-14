@@ -1,19 +1,6 @@
 import settings from './settings.js';
 
-const gainBalanceFactors: Record<OscillatorType, number> = {
-  square: 1,
-  sawtooth: 1.5,
-  triangle: 2.5,
-  sine: 2,
-  custom: 1
-};
-
 const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
-const timbreSelect = document.getElementById('timbreSelect') as HTMLSelectElement;
-
-timbreSelect.value = settings.get('timbre');
-
-timbreSelect.addEventListener('change', () => settings.set('timbre', timbreSelect.value));
 
 const initialVolume = settings.get('volume');
 if(!isNaN(initialVolume)) {
@@ -25,7 +12,7 @@ const volume = initialVolume;
 let context: AudioContext;
 let volumeNode: GainNode;
 
-const ensureContext = () => {
+const ensureAudioSetup = () => {
   if(!context) {
     context = new AudioContext();
 
@@ -33,85 +20,27 @@ const ensureContext = () => {
     volumeNode.gain.value = volume/100 * maxGain;
     volumeNode.connect(context.destination);
   }
-}
+};
 
 const stopAllNotes = () => {
-  ensureContext();
-}
+  ensureAudioSetup();
+};
 
 const setVolume = (percentage: number) => {
-  ensureContext();
+  ensureAudioSetup();
   // TODO: should i use a number between 0 and 1 instead of percentages?
   volumeNode.gain.value = percentage / 100 * maxGain;
   settings.set('volume', percentage);
-}
+};
 
-const changeTimbre = () => {
-  if(timbreSelect.selectedIndex === timbreSelect.length - 1) {
-    timbreSelect.selectedIndex = 0;
-  } else {
-    timbreSelect.selectedIndex++;
-  }
-  settings.set('timbre', timbreSelect.value);
-}
+export const connectAudioNode = (node: AudioNode) => {
+  ensureAudioSetup();
+  node.connect(volumeNode);
+};
 
-const frequencyFromNoteNumber = (noteNumber: number) => {
-  return 440 * 2**(noteNumber / 12);
-}
+export const getContext = () => {
+  ensureAudioSetup();
+  return context;
+};
 
-export class Note {
-  private noteNumber;
-  private oscillator!: OscillatorNode;
-  private fadeInDuration = 0.005;
-  private fadeOutDuration = 0.08;
-  private gainNode!: GainNode;
-  private oscillatorType: OscillatorType = timbreSelect.value as OscillatorType;
-  
-  constructor(noteNumber: number) {
-    this.noteNumber = noteNumber;
-  }
-
-  public start() {
-    ensureContext();
-    this.gainNode = context.createGain();
-    this.addOscillator();
-  }
-
-  public stop() {
-    ensureContext();
-    this.removeOscillator();
-  }
-
-  public changePitch(offset: number) {
-    const now = context.currentTime;
-    const frequency = frequencyFromNoteNumber(this.noteNumber + offset);
-    this.oscillator.frequency.setValueAtTime(frequency, now);
-  }
-
-  private addOscillator() {
-    const frequency = frequencyFromNoteNumber(this.noteNumber);
-    
-    const note = {};
-    this.oscillator = context.createOscillator();
-    this.oscillator.frequency.setValueAtTime(frequency, context.currentTime);
-    this.oscillator.type = this.oscillatorType;
-
-    this.oscillator.connect(this.gainNode);
-    this.gainNode.connect(volumeNode);
-
-    this.oscillator.start();
-
-    const now = context.currentTime;
-    this.gainNode.gain.setValueAtTime(0, now);
-    this.gainNode.gain.linearRampToValueAtTime(gainBalanceFactors[this.oscillatorType], now + this.fadeInDuration);
-  }
-
-  private removeOscillator() {
-    const now = context.currentTime;
-    this.gainNode.gain.setValueAtTime(gainBalanceFactors[this.oscillatorType], now);
-    this.gainNode.gain.linearRampToValueAtTime(0, now + this.fadeOutDuration);
-    this.oscillator.stop(now + this.fadeOutDuration);
-  }
-}
-
-export default { stopAllNotes, setVolume, changeTimbre, Note };
+export default { stopAllNotes, setVolume, connectAudioNode, getContext };

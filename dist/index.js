@@ -1,5 +1,6 @@
 import { noteNumberFromKey, transposeUp, transposeDown } from './keyMapping.js';
-import AudioHandler, { Note } from './audioHandler.js';
+import AudioHandler from './audioHandler.js';
+import { Note, changeTimbre } from './note.js';
 import './ui/SettingsModal.js';
 import ButtonGrid from './ui/ButtonGrid.js';
 import HeatMap from './ui/HeatMap.js';
@@ -67,7 +68,7 @@ document.addEventListener('keydown', e => {
         return;
     }
     if (e.code === 'Space') {
-        AudioHandler.changeTimbre();
+        changeTimbre();
     }
     const noteNumber = noteNumberFromKey(e.code);
     if (!Number.isInteger(noteNumber))
