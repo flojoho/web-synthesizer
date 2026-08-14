@@ -1,15 +1,3 @@
-var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-};
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _Note_instances, _Note_noteNumber, _Note_oscillator, _Note_addOscillator, _Note_removeOscillator;
 import settings from './settings.js';
 const gainBalanceFactors = {
     square: 1,
@@ -61,46 +49,44 @@ const frequencyFromNoteNumber = (noteNumber) => {
 };
 export class Note {
     constructor(noteNumber) {
-        _Note_instances.add(this);
-        _Note_noteNumber.set(this, void 0);
-        _Note_oscillator.set(this, void 0);
         this.fadeInDuration = 0.005;
         this.fadeOutDuration = 0.08;
         this.oscillatorType = timbreSelect.value;
-        __classPrivateFieldSet(this, _Note_noteNumber, noteNumber, "f");
+        this.noteNumber = noteNumber;
     }
     start() {
         ensureContext();
         this.gainNode = context.createGain();
-        __classPrivateFieldGet(this, _Note_instances, "m", _Note_addOscillator).call(this);
+        this.addOscillator();
     }
     stop() {
         ensureContext();
-        __classPrivateFieldGet(this, _Note_instances, "m", _Note_removeOscillator).call(this);
+        this.removeOscillator();
     }
     changePitch(offset) {
         const now = context.currentTime;
-        const frequency = frequencyFromNoteNumber(__classPrivateFieldGet(this, _Note_noteNumber, "f") + offset);
-        __classPrivateFieldGet(this, _Note_oscillator, "f").frequency.setValueAtTime(frequency, now);
+        const frequency = frequencyFromNoteNumber(this.noteNumber + offset);
+        this.oscillator.frequency.setValueAtTime(frequency, now);
+    }
+    addOscillator() {
+        const frequency = frequencyFromNoteNumber(this.noteNumber);
+        const note = {};
+        this.oscillator = context.createOscillator();
+        this.oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+        this.oscillator.type = this.oscillatorType;
+        this.oscillator.connect(this.gainNode);
+        this.gainNode.connect(volumeNode);
+        this.oscillator.start();
+        const now = context.currentTime;
+        this.gainNode.gain.setValueAtTime(0, now);
+        this.gainNode.gain.linearRampToValueAtTime(gainBalanceFactors[this.oscillatorType], now + this.fadeInDuration);
+    }
+    removeOscillator() {
+        const now = context.currentTime;
+        this.gainNode.gain.setValueAtTime(gainBalanceFactors[this.oscillatorType], now);
+        this.gainNode.gain.linearRampToValueAtTime(0, now + this.fadeOutDuration);
+        this.oscillator.stop(now + this.fadeOutDuration);
     }
 }
-_Note_noteNumber = new WeakMap(), _Note_oscillator = new WeakMap(), _Note_instances = new WeakSet(), _Note_addOscillator = function _Note_addOscillator() {
-    const frequency = frequencyFromNoteNumber(__classPrivateFieldGet(this, _Note_noteNumber, "f"));
-    const note = {};
-    __classPrivateFieldSet(this, _Note_oscillator, context.createOscillator(), "f");
-    __classPrivateFieldGet(this, _Note_oscillator, "f").frequency.setValueAtTime(frequency, context.currentTime);
-    __classPrivateFieldGet(this, _Note_oscillator, "f").type = this.oscillatorType;
-    __classPrivateFieldGet(this, _Note_oscillator, "f").connect(this.gainNode);
-    this.gainNode.connect(volumeNode);
-    __classPrivateFieldGet(this, _Note_oscillator, "f").start();
-    const now = context.currentTime;
-    this.gainNode.gain.setValueAtTime(0, now);
-    this.gainNode.gain.linearRampToValueAtTime(gainBalanceFactors[this.oscillatorType], now + this.fadeInDuration);
-}, _Note_removeOscillator = function _Note_removeOscillator() {
-    const now = context.currentTime;
-    this.gainNode.gain.setValueAtTime(gainBalanceFactors[this.oscillatorType], now);
-    this.gainNode.gain.linearRampToValueAtTime(0, now + this.fadeOutDuration);
-    __classPrivateFieldGet(this, _Note_oscillator, "f").stop(now + this.fadeOutDuration);
-};
 export default { stopAllNotes, setVolume, changeTimbre, Note };
 //# sourceMappingURL=audioHandler.js.map

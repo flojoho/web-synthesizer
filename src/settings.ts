@@ -20,7 +20,7 @@ const defaultSettings = [
     name: 'spacingSize',
     defaultValue: 5
   }
-]
+];
 
 type DefaultJSON = {
   [Key: string]: number | string
