@@ -1,6 +1,7 @@
 <script lang="ts">
   import './index.js';
   import TimbreSelect from './ui/TimbreSelect.svelte';
+  import VolumeSelect from './ui/VolumeSelect.svelte';
 </script>
 
 <main>
@@ -10,7 +11,7 @@
 <footer>
   <div>
     <div>
-      <input type="range" id="volumeSlider" min="0" max="100" value="100">
+      <VolumeSelect />
     </div>
   </div>
   <div class="flex-stretch">

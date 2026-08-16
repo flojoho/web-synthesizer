@@ -2,6 +2,7 @@ import { noteNumberFromKey, transposeUp, transposeDown } from './keyMapping.js';
 import AudioHandler from './audioHandler.js';
 import { Note } from './note.js';
 import { nextTimbre } from './timbre.svelte.js';
+import volume, {setVolume} from './volume.svelte.js';
 //import './ui/SettingsModal.js';
 //import ButtonGrid from './ui/ButtonGrid.js';
 //import HeatMap from './ui/HeatMap.js';
@@ -12,10 +13,6 @@ addEventListener('resize', () => {
   HeatMap.clear();
 });*/
 
-class VolumeSlider {
-  public value: string = '50';
-}
-const volumeSlider = new VolumeSlider();
 
 type Statistics = {
   volume: number,
@@ -52,7 +49,7 @@ function noteKeyGotPressed(keyCode: string) {
   //ButtonGrid.enableHighlight(noteNumber);
 
   incrementStatistics({
-    volume: parseInt(volumeSlider.value),
+    volume: parseFloat(volume.state),
     noteNumber: noteNumber
   });
 }
@@ -68,7 +65,7 @@ function noteKeyGotReleased(keyCode: string) {
 
 document.addEventListener('keydown', e => {
   if(['ArrowUp', 'ArrowDown'].includes(e.code)) {
-    const prevVolume = parseFloat(volumeSlider.value);
+    const prevVolume = volume.state;
     let nextVolume: number;
     if (e.code === 'ArrowUp') {
       nextVolume = prevVolume + 5;
@@ -79,7 +76,7 @@ document.addEventListener('keydown', e => {
     if(nextVolume > 100) nextVolume = 100;
     if(nextVolume < 0) nextVolume = 0;
     
-    volumeSlider.value = nextVolume.toString();
+    setVolume(nextVolume);
     AudioHandler.setVolume(nextVolume);
     return;
   }
@@ -116,7 +113,3 @@ document.addEventListener('keyup', e => {
     noteKeyGotReleased(e.code);
   }
 });
-
-/*volumeSlider.addEventListener('input', () => {
-  AudioHandler.setVolume(Number.parseFloat(volumeSlider.value));
-});*/
