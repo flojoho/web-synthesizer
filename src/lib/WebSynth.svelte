@@ -37,15 +37,6 @@
 </aside>
 
 <style>
-  body {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
-    background-color: var(--black);
-    color: var(--white);
-    overscroll-behavior: contain; /* disable pull to refresh */
-  }
 
   footer {
     width: 100%;
@@ -64,8 +55,6 @@
     position: relative;
   }
 
-
-
   input {
     width: 160px;
   }
@@ -73,22 +62,6 @@
   label {
     display: block;
     margin-bottom: 4px;
-  }
-
-  .note-button {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.4;
-  }
-  .note-button-circle {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-  .note-button-active {
-    opacity: 1 !important;
   }
 
   aside {
@@ -160,5 +133,24 @@
     height: 100%;
     opacity: 0.4;
     position: absolute;
+  }
+
+
+
+  
+  .note-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.4;
+  }
+  .note-button-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  .note-button-active {
+    opacity: 1 !important;
   }
 </style>
