@@ -1,11 +1,13 @@
-# web-synthesizer
+# Run project for development
 
-live version: https://flojoho.github.io/web-synthesizer
+```bash
+npm run dev
+```
 
-Web based synthesizer that can be played using your computer keyboard.
+# Build project
 
-## Keyboard Shortcuts:
+```bash
+npm run build
+```
 
-* Up/Down Arrow Keys: Increase/Decrease volume
-* Right/Left Arrow Keys: Transpose one semitone up/down
-* Space: Change sound
+Then run `npm run preview` to preview the project and see if the build was successful.

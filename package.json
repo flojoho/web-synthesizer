@@ -1,20 +1,21 @@
 {
-  "name": "web-synthesizer",
-  "version": "1.0.0",
-  "description": "live version: https://flojoho.github.io/web-synthesizer",
-  "main": "index.html",
+  "name": "web-synth",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc -watch"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/flojoho/web-synthesizer.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/flojoho/web-synthesizer/issues"
-  },
-  "homepage": "https://github.com/flojoho/web-synthesizer#readme"
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@tsconfig/svelte": "^5.0.8",
+    "@types/node": "^24.13.2",
+    "svelte": "^5.56.4",
+    "svelte-check": "^4.7.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1"
+  }
 }

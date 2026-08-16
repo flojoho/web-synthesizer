@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web Synthesizer</title>
+    <script src="dist/index.js" type="module"></script>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main>
+      <canvas id="heat-map"></canvas>
+      <div id="button-grid-container"></div>
+    </main>
+    <footer>
+      <div>
+        <div>
+          <input type="range" id="volumeSlider" min="0" max="100" value="100">
+        </div>
+      </div>
+      <div class="flex-stretch">
+        <div>
+          <select id="timbreSelect">
+            <option value="square">square</option>
+            <option value="sawtooth">sawtooth</option>
+            <option value="triangle">triangle</option>
+            <option value="sine">sine</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <button id="settings-button">•••</button>
+      </div>
+    </footer>
+    <aside id="modal" class="hidden">
+      <div>
+        <span id="close-button">×</span>
+        <div>
+          <label for="button-size-slider">button size</label>
+          <input type="range" id="button-size-slider" min="50" max="150" value="85">
+        </div>
+        <div>
+          <label for="spacing-size-slider">space between buttons</label>
+          <input type="range" id="spacing-size-slider" min="0" max="30" value="5">
+        </div>
+      </div>
+    </aside>
+  </body>
+</html>
