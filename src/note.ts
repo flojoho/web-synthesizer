@@ -1,5 +1,5 @@
-import settings from './settings.js';
 import AudioHandler from './audioHandler.js';
+import TimbreSelect from './ui/TimbreSelect.js';
 
 const gainBalanceFactors: Record<OscillatorType, number> = {
   square: 1,
@@ -8,20 +8,6 @@ const gainBalanceFactors: Record<OscillatorType, number> = {
   sine: 2,
   custom: 1
 };
-const timbreSelect = document.getElementById('timbreSelect') as HTMLSelectElement;
-
-timbreSelect.value = settings.get('timbre');
-
-timbreSelect.addEventListener('change', () => settings.set('timbre', timbreSelect.value));
-
-export const changeTimbre = () => {
-  if(timbreSelect.selectedIndex === timbreSelect.length - 1) {
-    timbreSelect.selectedIndex = 0;
-  } else {
-    timbreSelect.selectedIndex++;
-  }
-  settings.set('timbre', timbreSelect.value);
-}
 
 export class Note {
   private noteNumber;
@@ -29,7 +15,7 @@ export class Note {
   private fadeInDuration = 0.005;
   private fadeOutDuration = 0.08;
   private gainNode!: GainNode;
-  private oscillatorType: OscillatorType = timbreSelect.value as OscillatorType;
+  private oscillatorType: OscillatorType = TimbreSelect.oscillatorType as OscillatorType;
   
   constructor(noteNumber: number) {
     this.noteNumber = noteNumber;

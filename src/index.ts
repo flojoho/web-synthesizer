@@ -1,6 +1,7 @@
 import { noteNumberFromKey, transposeUp, transposeDown } from './keyMapping.js';
 import AudioHandler from './audioHandler.js';
-import { Note, changeTimbre } from './note.js';
+import { Note } from './note.js';
+import TimbreSelect from './ui/TimbreSelect.js';
 import './ui/SettingsModal.js';
 import ButtonGrid from './ui/ButtonGrid.js';
 import HeatMap from './ui/HeatMap.js';
@@ -91,7 +92,7 @@ document.addEventListener('keydown', e => {
   }
 
   if(e.code === 'Space') {
-    changeTimbre();
+    TimbreSelect.changeTimbre();
   }
   
   const noteNumber = noteNumberFromKey(e.code);
