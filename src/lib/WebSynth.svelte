@@ -2,12 +2,10 @@
   import './index.js';
   import TimbreSelect from './ui/TimbreSelect.svelte';
   import VolumeSelect from './ui/VolumeSelect.svelte';
+  import ButtonGrid from './ui/ButtonGrid.svelte';
 </script>
 
-<main>
-  <canvas id="heat-map"></canvas>
-  <div id="button-grid-container"></div>
-</main>
+<ButtonGrid />
 <footer>
   <div>
     <div>
@@ -38,7 +36,6 @@
 </aside>
 
 <style>
-
   footer {
     width: 100%;
     background-color: var(--dark-gray);
@@ -49,11 +46,6 @@
   }
   footer>div {
     margin: 0 16px 0 24px;
-  }
-
-  main {
-    flex: 1;
-    position: relative;
   }
 
   input {
@@ -121,37 +113,5 @@
 
   .flex-stretch {
     flex: 1;
-  }
-
-  #button-grid-container {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
-
-  #heat-map {
-    width: 100%;
-    height: 100%;
-    opacity: 0.4;
-    position: absolute;
-  }
-
-
-
-  
-  .note-button {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.4;
-  }
-  .note-button-circle {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-  .note-button-active {
-    opacity: 1 !important;
   }
 </style>
