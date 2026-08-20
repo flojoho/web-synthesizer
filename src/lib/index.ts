@@ -3,12 +3,11 @@ import AudioHandler from './audioHandler.js';
 import { Note } from './note.js';
 import { nextTimbre } from './timbre.svelte.js';
 import volume, {setVolume} from './volume.svelte.js';
+import { enableHighlight, disableHighlight } from './buttonGridDtos.svelte.js';
 //import './ui/SettingsModal.js';
-//import ButtonGrid from './ui/ButtonGrid.js';
 //import HeatMap from './ui/HeatMap.js';
 
-/*ButtonGrid.render();
-addEventListener('resize', () => {
+/*addEventListener('resize', () => {
   ButtonGrid.render();
   HeatMap.clear();
 });*/
@@ -46,7 +45,7 @@ function noteKeyGotPressed(keyCode: string) {
   notes[keyCode] = note;
   note.start();
 
-  //ButtonGrid.enableHighlight(noteNumber);
+  enableHighlight(noteNumber);
 
   incrementStatistics({
     volume: parseFloat(volume.state),
@@ -58,7 +57,7 @@ function noteKeyGotReleased(keyCode: string) {
   const noteNumber = noteNumberFromKey(keyCode);
   notes[keyCode]?.stop();
 
-  //ButtonGrid.disableHighlight(noteNumber);
+  disableHighlight(noteNumber);
 }
 
 //**************************** EVENT HANDLING ************************

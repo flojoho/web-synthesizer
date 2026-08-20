@@ -1,46 +1,15 @@
 <script lang=ts>
   import settings from '../settings.js';
   import NoteButton from './NoteButton.svelte';
-
-  class NoteButtonDto {
-    public x: number;
-    public y: number;
-    public noteNumber: number;
-    
-    constructor(noteNumber: number, x: number, y: number) {
-      this.noteNumber = noteNumber;
-      this.x = x;
-      this.y = y;
-    }
-  }
+  import { NoteButtonDto, addToHighlightGroup, get, set } from '../buttonGridDtos.svelte.js';
 
   let buttonGridContainer = $state<HTMLDivElement | null>(null);
-  let noteButtonDtos = $state<NoteButtonDto[]>([]);
 
   let diameter = settings.get('buttonSize');
   let spacing = settings.get('spacingSize');
 
-  const noteButtonGroups: (NoteButtonDto[])[] = [];
-
-  const addToNoteButtonGroup = (noteButtonDto: NoteButtonDto) => {
-    const { noteNumber } = noteButtonDto;
-
-    if(typeof noteButtonGroups[noteNumber] === 'undefined') {
-      noteButtonGroups[noteNumber] = []
-    }
-
-    noteButtonGroups[noteNumber].push(noteButtonDto);
-  }
-
   $effect(() => {
-    console.log('EFFECT RUN', buttonGridContainer);
-    
     if (buttonGridContainer) {
-      console.log(
-    'dimensions:',
-    buttonGridContainer.offsetWidth,
-    buttonGridContainer.offsetHeight
-  );
       const divWidth = buttonGridContainer.offsetWidth;
       const divHeight = buttonGridContainer.offsetHeight;
 
@@ -64,21 +33,13 @@
 
           gridElements.push(noteButtonDto);
 
-          addToNoteButtonGroup(noteButtonDto);
+          addToHighlightGroup(noteButtonDto);
         }
       }
 
-      noteButtonDtos = gridElements;
+      set(gridElements);
     }
   });
-
-  /*const enableHighlight = (noteNumber: number) => {
-    noteButtonGroups[noteNumber]?.forEach(noteButton => noteButton.enableHighlight());
-  }
-
-  const disableHighlight = (noteNumber: number) => {
-    noteButtonGroups[noteNumber]?.forEach(noteButton => noteButton.disableHighlight());
-  }*/
 
 
 
@@ -92,12 +53,13 @@
 <main>
   <canvas id="heat-map"></canvas>
   <div bind:this={buttonGridContainer} class="container">
-    {#each noteButtonDtos as noteButtonDto}
+    {#each get() as noteButtonDto}
       <div>
         <NoteButton
           x={noteButtonDto.x}
           y={noteButtonDto.y}
           noteNumber={noteButtonDto.noteNumber}
+          highlighted={noteButtonDto.highlighted}
           {diameter}
           {spacing}
         />

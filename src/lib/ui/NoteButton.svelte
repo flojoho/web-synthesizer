@@ -5,10 +5,11 @@
     y: number,
     noteNumber: number,
     diameter: number,
-    spacing: number
+    spacing: number,
+    highlighted: boolean
   }
 
-  let { x, y, noteNumber, diameter, spacing }: Props = $props();
+  let { x, y, noteNumber, diameter, spacing, highlighted }: Props = $props();
 
   class NoteButton {
     private div;
@@ -92,6 +93,7 @@
 
 <div
   class="note-button"
+  class:note-button-active={highlighted}
   style={`width: ${ diameter + spacing }px; height: ${ diameter + spacing }px; left: ${ x }px; top: ${ y }px;`}
 >
   <div
@@ -108,6 +110,7 @@
     justify-content: center;
     align-items: center;
     opacity: 0.4;
+    z-index: auto;
   }
   .note-button-circle {
     width: 100%;
@@ -116,5 +119,6 @@
   }
   .note-button-active {
     opacity: 1 !important;
+    z-index: 1;
   }
 </style>
