@@ -41,6 +41,7 @@ const notes: Notes = {};
 
 function noteKeyGotPressed(keyCode: string) {
   const noteNumber = noteNumberFromKey(keyCode);
+  if(noteNumber === null) return;
   const note = new Note(noteNumber);
   notes[keyCode] = note;
   note.start();
@@ -48,13 +49,14 @@ function noteKeyGotPressed(keyCode: string) {
   enableHighlight(noteNumber);
 
   incrementStatistics({
-    volume: parseFloat(volume.state),
+    volume: volume.state,
     noteNumber: noteNumber
   });
 }
 
 function noteKeyGotReleased(keyCode: string) {
   const noteNumber = noteNumberFromKey(keyCode);
+  if(noteNumber === null) return;
   notes[keyCode]?.stop();
 
   disableHighlight(noteNumber);
