@@ -4,9 +4,19 @@
   import VolumeSelect from './ui/VolumeSelect.svelte';
   import ButtonGrid from './ui/ButtonGrid.svelte';
   import SettingsModal from './ui/SettingsModal.svelte';
+  import settings from './settings.js';
+
+  let buttonGridDiameter = $state(settings.get('buttonSize'));
+  let buttonGridSpacing = $state(settings.get('spacingSize'));
+
+  let isSettingsModalHidden = $state(true);
+
+  const showSettingsModal = () => {
+    isSettingsModalHidden = false;
+  }
 </script>
 
-<ButtonGrid />
+<ButtonGrid diameter={buttonGridDiameter} spacing={buttonGridSpacing} />
 <footer>
   <div>
     <div>
@@ -19,10 +29,10 @@
     </div>
   </div>
   <div>
-    <button id="settings-button">•••</button>
+    <button id="settings-button" onclick={showSettingsModal}>•••</button>
   </div>
 </footer>
-<SettingsModal />
+<SettingsModal bind:buttonGridDiameter bind:buttonGridSpacing bind:hidden={isSettingsModalHidden} />
 
 <style>
   footer {

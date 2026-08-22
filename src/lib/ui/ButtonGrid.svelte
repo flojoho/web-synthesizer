@@ -5,8 +5,11 @@
 
   let buttonGridContainer = $state<HTMLDivElement | null>(null);
 
-  let diameter = settings.get('buttonSize');
-  let spacing = settings.get('spacingSize');
+  type Props = {
+    diameter: number,
+    spacing: number
+  }
+  let { diameter, spacing }: Props = $props();
 
   $effect(() => {
     if (buttonGridContainer) {
@@ -40,14 +43,6 @@
       set(gridElements);
     }
   });
-
-
-
-
-
-
-
-  
 </script>
 
 <main>

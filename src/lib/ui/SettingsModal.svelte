@@ -1,57 +1,45 @@
 <script lang=ts>
-  /*import { setDiameter, setSpacing } from "./NoteButton.js";
-  import ButtonGrid from './ButtonGrid.js';
-  import settings from '../settings.js';
-
-  const modal = document.getElementById('modal') as HTMLDivElement;
-  const settingsButton = document.getElementById('settings-button') as HTMLButtonElement;
-  const closeButton = document.getElementById('close-button') as HTMLButtonElement;
-  const buttonSizeSlider = document.getElementById('button-size-slider') as HTMLInputElement;
-  const spacingSizeSlider = document.getElementById('spacing-size-slider') as HTMLInputElement;
-
-  buttonSizeSlider.value = settings.get('buttonSize');
-  spacingSizeSlider.value = settings.get('spacingSize');
+  import settings from "../settings";
+  
+  type Props = {
+    buttonGridDiameter: number,
+    buttonGridSpacing: number,
+    hidden: boolean
+  }
+  let { buttonGridDiameter = $bindable(), buttonGridSpacing = $bindable(), hidden = $bindable() }: Props = $props();
 
   const toggleModal = () => {
-    modal.classList.toggle('hidden');
+    hidden = true;
   }
 
-  settingsButton.addEventListener('click', toggleModal);
-  closeButton.addEventListener('click', toggleModal);
-
-  buttonSizeSlider
-
-  buttonSizeSlider.addEventListener('input', () => {
-    const buttonSize = Number.parseFloat(buttonSizeSlider.value);
-    setDiameter(buttonSize);
-    ButtonGrid.render();
+  const buttonSizeSliderOnInput = (e: Event) => {
+    const buttonSize = Number.parseFloat((e.target as HTMLInputElement).value);
+    buttonGridDiameter = buttonSize;
     settings.set('buttonSize', buttonSize);
-  });
+  };
 
-  spacingSizeSlider.addEventListener('input', () => {
-    const spacingSize = Number.parseFloat(spacingSizeSlider.value);
-    setSpacing(spacingSize);
-    ButtonGrid.render();
+  const spacingSizeSliderOnInput = (e: Event) => {
+    const spacingSize = Number.parseFloat((e.target as HTMLInputElement).value);
+    buttonGridSpacing = spacingSize;
     settings.set('spacingSize', spacingSize);
-  });*/
+  };
 </script>
 
-<aside id="modal" class="hidden">
+<aside id="modal" class:hidden={hidden}>
   <div>
-    <span id="close-button">×</span>
+    <span id="close-button" onclick={toggleModal}>×</span>
     <div>
       <label for="button-size-slider">button size</label>
-      <input type="range" id="button-size-slider" min="50" max="150" value="85">
+      <input type="range" oninput={buttonSizeSliderOnInput} min="50" max="150" bind:value={buttonGridDiameter}>
     </div>
     <div>
       <label for="spacing-size-slider">space between buttons</label>
-      <input type="range" id="spacing-size-slider" min="0" max="30" value="5">
+      <input type="range" oninput={spacingSizeSliderOnInput} id="spacing-size-slider" min="0" max="30" bind:value={buttonGridSpacing}>
     </div>
   </div>
 </aside>
 
 <style>
-
   input {
     width: 160px;
   }
