@@ -1,5 +1,4 @@
 <script lang=ts>
-  import settings from '../settings.js';
   import NoteButton from './NoteButton.svelte';
   import { NoteButtonDto, addToHighlightGroup, get, set } from '../buttonGridDtos.svelte.js';
 
