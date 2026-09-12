@@ -1,8 +1,10 @@
 <script lang=ts>
   import NoteButton from './NoteButton.svelte';
   import { NoteButtonDto, addToHighlightGroup, get, set } from '../buttonGridDtos.svelte.js';
+  import HeatMap from './HeatMap.svelte';
 
   let buttonGridContainer = $state<HTMLDivElement | null>(null);
+  let heatMap: HeatMap;
 
   type Props = {
     diameter: number,
@@ -52,6 +54,15 @@
       updateGrid();
     });
 
+    buttonGridContainer.addEventListener('touchstart', e => {
+      e.preventDefault();
+
+      const x = e.targetTouches[0].clientX;
+      const y = e.targetTouches[0].clientY;
+
+      heatMap.drawCircle(x, y);
+    });
+
     observer.observe(buttonGridContainer);
 
     return () => {
@@ -61,7 +72,7 @@
 </script>
 
 <main>
-  <canvas id="heat-map"></canvas>
+  <HeatMap bind:this={heatMap}/>
   <div bind:this={buttonGridContainer} class="container">
     {#each get() as noteButtonDto}
       <div>
