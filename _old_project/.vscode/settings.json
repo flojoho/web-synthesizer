@@ -1,6 +1,0 @@
-{
-  "search.exclude": {
-    "dist/**/*.js": true,
-    "dist/**/*.js.map": true
-  }
-}
